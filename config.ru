@@ -8,13 +8,7 @@ class App < Roda
 
   plugin :json
 
-  opts[:ein] = if File.exist? DATA_FILE
-    Marshal.load File.read DATA_FILE
-  else
-    EIN.instance.fetch_data
-    File.write DATA_FILE, Marshal.dump(EIN.instance)
-    EIN.instance
-  end
+  opts[:ein] = EIN.instance
 
   route do |r|
     # GET /000003154 request

@@ -4,35 +4,31 @@ require 'http'
 require 'zipruby'
 require 'csv'
 require 'singleton'
+require 'dbm'
 
 class EIN
+  DB_FILENAME = '.ein.db'
   include Singleton
 
   attr_accessor :data
 
-  def initialize
-    @data = []
-  end
+  def initialize url: 'https://apps.irs.gov/pub/epostcard/data-download-pub78.zip'
 
-  def fetch_data url: 'https://apps.irs.gov/pub/epostcard/data-download-pub78.zip'
-    @data = parse unzip download url
+    if File.exist? DB_FILENAME
+      @db = DBM.open DB_FILENAME, 0666, DBM::WRITER
+    else
+      @db = DBM.open DB_FILENAME, 0666, DBM::NEWDB
+      data = parse unzip download url
+      data.each { |k, v| @db[k] = v }
+    end
   end
 
   def find ein
-    @data.assoc ein
+    [ein, @db[ein]]
   end
 
   def inspect
-    "#<#{self.class.name}:#{@data.size} cached>"
-  end
-
-  def _dump depth = -1
-    Marshal.dump @data, depth
-  end
-
-  def self._load string
-    instance.data = Marshal.load string
-    instance
+    "#<#{self.class.name}:#{@db.size} cached>"
   end
 
   private
