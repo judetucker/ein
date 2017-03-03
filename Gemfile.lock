@@ -4,6 +4,9 @@ GEM
     addressable (2.4.0)
     domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
+    forme (1.5.0)
+    haml (4.0.7)
+      tilt
     http (2.0.3)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
@@ -15,8 +18,10 @@ GEM
     http_parser.rb (0.6.0)
     puma (3.6.0)
     rack (2.0.1)
+    rack-unreloader (1.6.0)
     roda (2.19.0)
       rack
+    tilt (2.0.6)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
@@ -26,7 +31,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  forme
+  haml
   http
   puma
+  rack-unreloader
   roda
+  tilt
   zipruby
+
+BUNDLED WITH
+   1.14.4

@@ -5,6 +5,7 @@ require 'zipruby'
 require 'csv'
 require 'singleton'
 require 'dbm'
+require 'forme'
 
 class EIN
   DB_FILENAME = '.ein.db'

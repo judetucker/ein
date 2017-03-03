@@ -1,21 +1,9 @@
 # frozen_string_literal: true
-
+require 'rack/unreloader'
+Unreloader = Rack::Unreloader.new{App}
 require 'roda'
 require_relative 'lib/ein'
+Unreloader.require './app.rb'
+run Unreloader
 
-class App < Roda
-  DATA_FILE = 'data.pstore'
-
-  plugin :json
-
-  opts[:ein] = EIN.instance
-
-  route do |r|
-    # GET /000003154 request
-    r.is ':ein' do |ein|
-      opts[:ein].find(ein) or response.status = 404
-    end
-  end
-end
-
-run App.freeze.app
+# run App.freeze.app

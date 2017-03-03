@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
 gem 'roda'
-gem 'zipruby'
 gem 'puma'
+gem 'rack-unreloader'
+gem 'zipruby'
 gem 'http'
+gem 'tilt'
+gem 'haml'
+gem 'forme'
